@@ -1,0 +1,6 @@
+## Rules specific to best_choice
+- Balance fare optimization, convenience, and connection quality equally
+- Use moderate group sizes (2–4 legs) for the best trade-off
+- Split at natural break points: stopovers, cabin changes, airline/alliance changes
+- Keep same-alliance segments together when it doesn't hurt pricing
+- Consider the overall traveler experience — fewer tickets is better unless splitting saves significant money

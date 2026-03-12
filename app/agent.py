@@ -6,9 +6,8 @@ import logging
 import re
 from pathlib import Path
 
-import anthropic
-
 from app.config import settings
+from app.providers import BaseLLMProvider, get_provider
 
 logger = logging.getLogger(__name__)
 from app.models import (
@@ -20,7 +19,14 @@ from app.models import (
     Strategy,
 )
 
-PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
+PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts" / "default"
+
+_STRATEGY_SUFFIX = {
+    Strategy.BEST_PRICE: "best_price",
+    Strategy.SHORTEST_TIME: "shortest_time",
+    Strategy.FEWEST_STOPS: "fewest_stops",
+    Strategy.BEST_CHOICE: "best_choice",
+}
 
 # Map compact AI output keys → Leg field names
 _LEG_KEY_MAP = {
@@ -37,8 +43,19 @@ _LEG_KEY_MAP = {
 }
 
 
-def _load_prompt(name: str) -> str:
-    return (PROMPTS_DIR / name).read_text(encoding="utf-8").strip()
+def _load_system_prompt(strategy: Strategy) -> str:
+    """Load and combine prompt fragments, including only the files for the given strategy."""
+    suffix = _STRATEGY_SUFFIX[strategy]
+    parts = []
+    for path in sorted(PROMPTS_DIR.glob("*.txt")):
+        stem = path.stem
+        # Strategy-specific files (03.x_, 04.x_) — include only the matching one
+        if "_rules_" in stem and stem != "03_rules_general" and suffix not in stem:
+            continue
+        if "_strategy_" in stem and suffix not in stem:
+            continue
+        parts.append(path.read_text(encoding="utf-8").strip())
+    return "\n\n".join(parts)
 
 
 def _build_user_prompt(request: ItineraryRequest, strategy: Strategy) -> str:
@@ -121,28 +138,20 @@ def _parse_single_strategy(
 
     return SplitOption(
         strategy=strategy,
-        description=data.get("desc", ""),
         searches=searches,
     )
 
 
 async def _call_strategy(
-    client: anthropic.AsyncAnthropic,
+    provider: BaseLLMProvider,
     request: ItineraryRequest,
     strategy: Strategy,
-    system_prompt: str,
 ) -> SplitOption:
     """Make a single AI call for one strategy."""
+    system_prompt = _load_system_prompt(strategy)
     user_prompt = _build_user_prompt(request, strategy)
 
-    message = await client.messages.create(
-        model=settings.ai_model,
-        max_tokens=settings.ai_max_tokens,
-        system=system_prompt,
-        messages=[{"role": "user", "content": user_prompt}],
-    )
-
-    response_text = message.content[0].text if message.content else ""
+    response_text = await provider.complete(system_prompt, user_prompt)
 
     try:
         option = _parse_single_strategy(response_text, strategy, request.verbose)
@@ -194,12 +203,11 @@ def _resolve_strategies(request: ItineraryRequest) -> list[Strategy]:
 
 async def split_itinerary(request: ItineraryRequest) -> ItineraryResponse:
     """Call the AI agent to split the itinerary — one call per strategy, in parallel."""
-    client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
-    system_prompt = _load_prompt("system.txt")
+    provider = get_provider()
 
     strategies = _resolve_strategies(request)
     tasks = [
-        _call_strategy(client, request, strategy, system_prompt)
+        _call_strategy(provider, request, strategy)
         for strategy in strategies
     ]
     options = await asyncio.gather(*tasks)

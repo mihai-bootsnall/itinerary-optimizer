@@ -1,0 +1,7 @@
+## Rules specific to best_price
+- Prefer more, smaller search groups to maximize carrier competition
+- Pair long-haul flights as round-trips — a round-trip is dramatically cheaper than two one-ways
+- Detach cheap short hops that would inflate the fare basis of expensive long-haul tickets
+- Split at alliance/carrier boundaries so each ticket can be priced independently
+- When mixing cabin classes, separate them into different tickets to avoid fare contamination
+- Look for hidden open-jaw opportunities that price the same as round-trips

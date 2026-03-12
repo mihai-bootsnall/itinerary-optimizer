@@ -76,7 +76,6 @@ class SearchGroup(BaseModel):
 class SplitOption(BaseModel):
     """One way to split the full itinerary into Amadeus-searchable groups."""
     strategy: Strategy
-    description: str
     searches: list[SearchGroup]
 
 

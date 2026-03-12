@@ -1,0 +1,14 @@
+## General splitting rules
+1. Even itineraries with 6 or fewer legs may benefit from splitting into
+   separate tickets for better pricing
+2. ALWAYS keep transatlantic/transpacific pairs as round-trips when the
+   itinerary starts and ends at the same city or region
+3. NEVER strand a long-haul segment as a one-way if it can be paired
+4. Isolate short cheap domestic hops (e.g. HAN-SAI, LAX-SFO) when they
+   risk polluting fare combinability on expensive long-haul tickets
+5. Respect alliance/carrier logic: segments that share a carrier or
+   alliance combine better on one ticket
+6. Consider that Business/First class fares are far more sensitive to
+   combinability than Economy
+7. Exploit open-jaw opportunities
+

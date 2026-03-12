@@ -1,0 +1,2 @@
+## Strategy: fewest_stops
+Minimize the number of separate bookings. Keep connected legs together in fewer, larger search groups (up to 4 legs each). Only split where absolutely necessary.

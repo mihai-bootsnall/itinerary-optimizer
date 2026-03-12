@@ -1,0 +1,15 @@
+## Output format
+Your entire response must be a single valid JSON object — no markdown fences, no backticks, no text before or after the JSON. Start your response with `{` and end with `}`.
+
+Use these short keys:
+{
+  "searches": [
+    {
+      "legs": [
+        {"from": "XXX", "to": "YYY", "date": "YYYY-MM-DD"}
+      ],
+      "note": "Why grouped"
+    }
+  ],
+  "reasoning": "Your analysis"
+}

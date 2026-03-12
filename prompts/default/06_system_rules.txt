@@ -1,0 +1,6 @@
+## System rules
+- Omit leg fields that match the global defaults (don't repeat cabin/flex/apt_chg/nearby/pref/excl if unchanged)
+- Keep "note" values under 15 words
+- Keep "reasoning" under 50 words
+- Every input leg MUST appear in exactly one search group. Do not drop or duplicate legs.
+- CRITICAL: output raw JSON only. No prose, no explanation outside the JSON object.

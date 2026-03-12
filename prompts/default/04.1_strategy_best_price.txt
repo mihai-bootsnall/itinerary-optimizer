@@ -1,0 +1,2 @@
+## Strategy: best_price
+Isolate segments into separate tickets to unlock independent pricing and carrier competition. Pair long-haul flights as round-trips, detach cheap short hops that would inflate combined fares, and split where alliance or fare rules change.

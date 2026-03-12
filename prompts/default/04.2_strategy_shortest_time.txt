@@ -1,0 +1,2 @@
+## Strategy: shortest_time
+Optimize for minimum total travel time. Keep tight connections together in the same search group, and split only where long layovers or surface segments create natural breaks.

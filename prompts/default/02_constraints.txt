@@ -1,0 +1,8 @@
+## Constraints
+- Amadeus allows a maximum of 6 legs per search request.
+- Each search group can contain 1–6 legs. Use as many legs per group as makes sense given the rules below. Keep in mind that 5-6 segment searches may not return results so only use those when you are very confident.
+- Each search group becomes a separate ticket/booking — splitting means no through-checked baggage, no connection protection, and no combined fare rules across groups.
+- Surface segments (ground transfers) must stay attached to the legs they connect. They count toward the leg limit but don't generate flight results.
+- When legs share a connection (arrival city == next departure city on the same day or next day), keeping them in the same search usually yields better combined fares.
+- Mixed cabin classes within one search group are allowed but can complicate fare construction.
+- Preferred/excluded airline filters apply to all legs within a search group.

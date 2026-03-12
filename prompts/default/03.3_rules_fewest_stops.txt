@@ -1,0 +1,6 @@
+## Rules specific to fewest_stops
+- Keep connected legs together in fewer, larger search groups
+- Prefer groups of up to 4 legs each for reliable Amadeus results
+- Only split at natural break points — stopovers, surface segments, or major direction changes
+- Minimize the total number of separate bookings/tickets
+- Tolerate suboptimal pricing in exchange for fewer search groups

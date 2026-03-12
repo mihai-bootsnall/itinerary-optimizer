@@ -1,0 +1,6 @@
+## Rules specific to shortest_time
+- Keep tight connections (same day or next day) in the same search group
+- Split where long layovers or surface segments create natural time breaks
+- Prioritize groupings that preserve direct/nonstop routing options
+- Don't break connections that would force passengers to re-check baggage or clear immigration unnecessarily
+- Group legs served by the same carrier or alliance to enable through-check-in

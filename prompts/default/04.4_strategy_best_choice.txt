@@ -1,0 +1,2 @@
+## Strategy: best_choice
+Find the optimal balance of price, travel time, and booking simplicity. Split at natural break points — stopovers, cabin changes, alliance boundaries — while keeping the total number of tickets reasonable.
