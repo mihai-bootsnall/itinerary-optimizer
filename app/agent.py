@@ -151,14 +151,42 @@ async def _call_strategy(
     return option
 
 
+def _resolve_strategies(request: ItineraryRequest) -> list[Strategy]:
+    """Determine which strategies to compute.
+
+    If the request explicitly lists strategies, use those.
+    Otherwise fall back to ITINERARY_DEFAULT_STRATEGIES from config (comma-separated).
+    If that is also empty, return all four strategies.
+    """
+    # Request provided explicit strategies — use them
+    if request.strategies:
+        return request.strategies
+
+    # Try config default
+    if settings.default_strategies:
+        names = [s.strip().lower() for s in settings.default_strategies.split(",") if s.strip()]
+        valid = []
+        for name in names:
+            try:
+                valid.append(Strategy(name))
+            except ValueError:
+                pass
+        if valid:
+            return valid
+
+    # Fallback: all strategies
+    return list(Strategy)
+
+
 async def split_itinerary(request: ItineraryRequest) -> ItineraryResponse:
     """Call the AI agent to split the itinerary — one call per strategy, in parallel."""
     client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
     system_prompt = _load_prompt("system.txt")
 
+    strategies = _resolve_strategies(request)
     tasks = [
         _call_strategy(client, request, strategy, system_prompt)
-        for strategy in request.strategies
+        for strategy in strategies
     ]
     options = await asyncio.gather(*tasks)
 

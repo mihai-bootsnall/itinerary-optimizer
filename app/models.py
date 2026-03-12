@@ -58,8 +58,8 @@ class ItineraryRequest(BaseModel):
     legs: list[Leg] = Field(min_length=1)
     settings: GlobalSettings = Field(default_factory=GlobalSettings)
     strategies: list[Strategy] = Field(
-        default_factory=lambda: list(Strategy),
-        description="Which strategies to compute. Defaults to all four.",
+        default_factory=list,
+        description="Which strategies to compute. Empty = use server default (all four if unconfigured).",
     )
     verbose: bool = Field(
         default=False,

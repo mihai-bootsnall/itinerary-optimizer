@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(export PATH=\"/home/mihai/.local/bin:$PATH\")",
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Read(//var/www/itinerary-engine/app/amadeus/solutions/**)",
+      "Read(//var/www/itinerary-engine/**)",
+      "Bash(find /var/www/itinerary-engine -type f -name *.sql -o -name alembic.ini -o -name *migration*)"
     ]
   }
 }
