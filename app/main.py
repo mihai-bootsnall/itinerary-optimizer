@@ -1,6 +1,8 @@
 import logging
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 
 from app.agent import split_itinerary
 from app.models import ItineraryRequest, ItineraryResponse
@@ -22,6 +24,11 @@ async def split(request: ItineraryRequest) -> ItineraryResponse:
     except Exception as exc:
         logger.exception("Split failed for %d-leg itinerary", len(request.legs))
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.get("/sandbox")
+async def sandbox():
+    return FileResponse(Path(__file__).resolve().parent.parent / "static" / "sandbox.html")
 
 
 @app.get("/health")
