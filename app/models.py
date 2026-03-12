@@ -48,10 +48,10 @@ class GlobalSettings(BaseModel):
 
 
 class Strategy(str, Enum):
-    COMFORT = "comfort"
-    BEST_VALUE = "best_value"
-    CHEAPEST = "cheapest"
-    SHORTEST = "shortest"
+    BEST_PRICE = "best_price"
+    SHORTEST_TIME = "shortest_time"
+    FEWEST_STOPS = "fewest_stops"
+    BEST_CHOICE = "best_choice"
 
 
 class ItineraryRequest(BaseModel):

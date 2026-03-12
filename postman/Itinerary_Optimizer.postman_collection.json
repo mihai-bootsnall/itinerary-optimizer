@@ -127,26 +127,26 @@
       }
     },
     {
-      "name": "11 — Single strategy: best_value only (6 legs)",
+      "name": "11 — Single strategy: best_choice only (6 legs)",
       "request": {
         "method": "POST",
         "header": [{"key": "Content-Type", "value": "application/json"}],
         "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"legs\": [\n    {\"origin\": \"JFK\", \"destination\": \"LIS\", \"date\": \"2026-08-01\"},\n    {\"origin\": \"LIS\", \"destination\": \"ATH\", \"date\": \"2026-08-05\"},\n    {\"origin\": \"ATH\", \"destination\": \"IST\", \"date\": \"2026-08-08\"},\n    {\"origin\": \"IST\", \"destination\": \"DUB\", \"date\": \"2026-08-11\"},\n    {\"origin\": \"DUB\", \"destination\": \"KEF\", \"date\": \"2026-08-14\", \"flexible_date\": true},\n    {\"origin\": \"KEF\", \"destination\": \"JFK\", \"date\": \"2026-08-17\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"C\",\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 2}]\n  },\n  \"strategies\": [\"best_value\"]\n}"
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"JFK\", \"destination\": \"LIS\", \"date\": \"2026-08-01\"},\n    {\"origin\": \"LIS\", \"destination\": \"ATH\", \"date\": \"2026-08-05\"},\n    {\"origin\": \"ATH\", \"destination\": \"IST\", \"date\": \"2026-08-08\"},\n    {\"origin\": \"IST\", \"destination\": \"DUB\", \"date\": \"2026-08-11\"},\n    {\"origin\": \"DUB\", \"destination\": \"KEF\", \"date\": \"2026-08-14\", \"flexible_date\": true},\n    {\"origin\": \"KEF\", \"destination\": \"JFK\", \"date\": \"2026-08-17\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"C\",\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 2}]\n  },\n  \"strategies\": [\"best_choice\"]\n}"
         }
       }
     },
     {
-      "name": "12 — Two strategies: cheapest + comfort (8 legs)",
+      "name": "12 — Two strategies: best_price + fewest_stops (8 legs)",
       "request": {
         "method": "POST",
         "header": [{"key": "Content-Type", "value": "application/json"}],
         "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"legs\": [\n    {\"origin\": \"LHR\", \"destination\": \"BKK\", \"date\": \"2026-09-01\"},\n    {\"origin\": \"BKK\", \"destination\": \"SGN\", \"date\": \"2026-09-05\", \"flexible_date\": true},\n    {\"origin\": \"SGN\", \"destination\": \"HAN\", \"date\": \"2026-09-08\"},\n    {\"origin\": \"HAN\", \"destination\": \"HKG\", \"date\": \"2026-09-11\"},\n    {\"origin\": \"HKG\", \"destination\": \"NRT\", \"date\": \"2026-09-14\"},\n    {\"origin\": \"NRT\", \"destination\": \"ICN\", \"date\": \"2026-09-17\"},\n    {\"origin\": \"ICN\", \"destination\": \"SIN\", \"date\": \"2026-09-20\"},\n    {\"origin\": \"SIN\", \"destination\": \"LHR\", \"date\": \"2026-09-24\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"Y\",\n    \"preferred_airlines\": [\"*A\"],\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 1}]\n  },\n  \"strategies\": [\"cheapest\", \"comfort\"]\n}"
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"LHR\", \"destination\": \"BKK\", \"date\": \"2026-09-01\"},\n    {\"origin\": \"BKK\", \"destination\": \"SGN\", \"date\": \"2026-09-05\", \"flexible_date\": true},\n    {\"origin\": \"SGN\", \"destination\": \"HAN\", \"date\": \"2026-09-08\"},\n    {\"origin\": \"HAN\", \"destination\": \"HKG\", \"date\": \"2026-09-11\"},\n    {\"origin\": \"HKG\", \"destination\": \"NRT\", \"date\": \"2026-09-14\"},\n    {\"origin\": \"NRT\", \"destination\": \"ICN\", \"date\": \"2026-09-17\"},\n    {\"origin\": \"ICN\", \"destination\": \"SIN\", \"date\": \"2026-09-20\"},\n    {\"origin\": \"SIN\", \"destination\": \"LHR\", \"date\": \"2026-09-24\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"Y\",\n    \"preferred_airlines\": [\"*A\"],\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 1}]\n  },\n  \"strategies\": [\"best_price\", \"fewest_stops\"]\n}"
         }
       }
     }
