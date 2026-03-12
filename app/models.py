@@ -27,7 +27,7 @@ class Passenger(BaseModel):
 class Leg(BaseModel):
     origin: str = Field(min_length=3, max_length=3, description="IATA airport code")
     destination: str = Field(min_length=3, max_length=3, description="IATA airport code")
-    departure_date: str = Field(description="Departure date in Y-m-d format")
+    date: str = Field(description="Departure date in Y-m-d format")
     surface_segment: bool = False
     cabin_class: CabinClass | None = None
     flexible_date: bool | None = None

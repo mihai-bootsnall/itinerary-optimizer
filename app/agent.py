@@ -23,7 +23,7 @@ PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
 _LEG_KEY_MAP = {
     "from": "origin",
     "to": "destination",
-    "date": "departure_date",
+    "date": "date",
     "cabin": "cabin_class",
     "flex": "flexible_date",
     "apt_chg": "allow_airport_change",
@@ -42,7 +42,7 @@ def _build_user_prompt(request: ItineraryRequest, strategy: Strategy) -> str:
     legs_desc = []
     for i, leg in enumerate(request.legs, 1):
         parts = [
-            f"Leg {i}: {leg.origin}→{leg.destination} {leg.departure_date}",
+            f"Leg {i}: {leg.origin}→{leg.destination} {leg.date}",
         ]
         if leg.surface_segment:
             parts.append(" [SURFACE]")
