@@ -1,7 +1,11 @@
+import logging
+
 from fastapi import FastAPI, HTTPException
 
 from app.agent import split_itinerary
 from app.models import ItineraryRequest, ItineraryResponse
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Itinerary Optimizer",
@@ -16,6 +20,7 @@ async def split(request: ItineraryRequest) -> ItineraryResponse:
     try:
         return await split_itinerary(request)
     except Exception as exc:
+        logger.exception("Split failed for %d-leg itinerary", len(request.legs))
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 

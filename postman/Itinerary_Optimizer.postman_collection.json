@@ -4,12 +4,7 @@
     "description": "AI-powered flight itinerary splitting — test suite with 4 to 24 leg trips",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "variable": [
-    {
-      "key": "base_url",
-      "value": "http://localhost:8000"
-    }
-  ],
+  "variable": [],
   "item": [
     {
       "name": "01 — Europe short hop (4 legs)",

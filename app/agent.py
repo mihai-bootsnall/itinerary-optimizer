@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import re
 from pathlib import Path
 
 import anthropic
 
 from app.config import settings
+
+logger = logging.getLogger(__name__)
 from app.models import (
     ItineraryRequest,
     ItineraryResponse,
@@ -139,12 +142,23 @@ async def _call_strategy(
         messages=[{"role": "user", "content": user_prompt}],
     )
 
-    response_text = message.content[0].text
-    option = _parse_single_strategy(response_text, strategy, request.verbose)
+    response_text = message.content[0].text if message.content else ""
+
+    try:
+        option = _parse_single_strategy(response_text, strategy, request.verbose)
+    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        logger.error(
+            "Strategy %s failed to parse: %s — raw response: %.500s",
+            strategy.value, exc, response_text,
+        )
+        raise ValueError("Optimization request failed, please try again later") from exc
 
     if request.verbose:
-        data = json.loads(_clean_json(response_text))
-        option._reasoning = data.get("reasoning", "")
+        try:
+            data = json.loads(_clean_json(response_text))
+            option._reasoning = data.get("reasoning", "")
+        except (json.JSONDecodeError, KeyError):
+            option._reasoning = ""
     else:
         option._reasoning = ""
 
