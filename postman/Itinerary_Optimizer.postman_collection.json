@@ -1,0 +1,135 @@
+{
+  "info": {
+    "name": "Itinerary Optimizer",
+    "description": "AI-powered flight itinerary splitting — test suite with 4 to 24 leg trips",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 — Europe short hop (4 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"LHR\", \"destination\": \"CDG\", \"departure_date\": \"2026-06-01\"},\n    {\"origin\": \"CDG\", \"destination\": \"FCO\", \"departure_date\": \"2026-06-04\"},\n    {\"origin\": \"FCO\", \"destination\": \"BCN\", \"departure_date\": \"2026-06-07\"},\n    {\"origin\": \"BCN\", \"destination\": \"LHR\", \"departure_date\": \"2026-06-10\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"Y\",\n    \"flexible_date\": true,\n    \"allow_nearby_locations\": true,\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 2}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "02 — US domestic with flex dates (5 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"JFK\", \"destination\": \"ORD\", \"departure_date\": \"2026-07-01\", \"flexible_date\": true},\n    {\"origin\": \"ORD\", \"destination\": \"DEN\", \"departure_date\": \"2026-07-03\", \"flexible_date\": true},\n    {\"origin\": \"DEN\", \"destination\": \"LAX\", \"departure_date\": \"2026-07-06\"},\n    {\"origin\": \"LAX\", \"destination\": \"SFO\", \"departure_date\": \"2026-07-08\"},\n    {\"origin\": \"SFO\", \"destination\": \"JFK\", \"departure_date\": \"2026-07-11\", \"flexible_date\": true}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"Y\",\n    \"preferred_airlines\": [\"UA\", \"AA\"],\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 1}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "03 — Transatlantic + Mediterranean (6 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"JFK\", \"destination\": \"LIS\", \"departure_date\": \"2026-08-01\"},\n    {\"origin\": \"LIS\", \"destination\": \"ATH\", \"departure_date\": \"2026-08-05\"},\n    {\"origin\": \"ATH\", \"destination\": \"IST\", \"departure_date\": \"2026-08-08\", \"allow_nearby_locations\": true},\n    {\"origin\": \"IST\", \"destination\": \"DUB\", \"departure_date\": \"2026-08-11\"},\n    {\"origin\": \"DUB\", \"destination\": \"KEF\", \"departure_date\": \"2026-08-14\", \"flexible_date\": true},\n    {\"origin\": \"KEF\", \"destination\": \"JFK\", \"departure_date\": \"2026-08-17\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"C\",\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 2}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "04 — Asia explorer (8 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"LHR\", \"destination\": \"BKK\", \"departure_date\": \"2026-09-01\"},\n    {\"origin\": \"BKK\", \"destination\": \"SGN\", \"departure_date\": \"2026-09-05\", \"flexible_date\": true},\n    {\"origin\": \"SGN\", \"destination\": \"HAN\", \"departure_date\": \"2026-09-08\"},\n    {\"origin\": \"HAN\", \"destination\": \"HKG\", \"departure_date\": \"2026-09-11\", \"allow_airport_change\": true},\n    {\"origin\": \"HKG\", \"destination\": \"NRT\", \"departure_date\": \"2026-09-14\"},\n    {\"origin\": \"NRT\", \"destination\": \"ICN\", \"departure_date\": \"2026-09-17\", \"flexible_date\": true},\n    {\"origin\": \"ICN\", \"destination\": \"SIN\", \"departure_date\": \"2026-09-20\"},\n    {\"origin\": \"SIN\", \"destination\": \"LHR\", \"departure_date\": \"2026-09-24\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"C\",\n    \"allow_nearby_locations\": true,\n    \"preferred_airlines\": [\"*A\"],\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 1}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "05 — Africa circuit with surface segments (10 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"CDG\", \"destination\": \"CMN\", \"departure_date\": \"2026-10-01\"},\n    {\"origin\": \"CMN\", \"destination\": \"RAK\", \"departure_date\": \"2026-10-04\", \"surface_segment\": true},\n    {\"origin\": \"RAK\", \"destination\": \"ACC\", \"departure_date\": \"2026-10-04\"},\n    {\"origin\": \"ACC\", \"destination\": \"LOS\", \"departure_date\": \"2026-10-07\", \"flexible_date\": true},\n    {\"origin\": \"LOS\", \"destination\": \"ADD\", \"departure_date\": \"2026-10-10\"},\n    {\"origin\": \"ADD\", \"destination\": \"NBO\", \"departure_date\": \"2026-10-13\"},\n    {\"origin\": \"NBO\", \"destination\": \"DAR\", \"departure_date\": \"2026-10-16\", \"surface_segment\": true},\n    {\"origin\": \"DAR\", \"destination\": \"JNB\", \"departure_date\": \"2026-10-16\"},\n    {\"origin\": \"JNB\", \"destination\": \"CPT\", \"departure_date\": \"2026-10-20\", \"flexible_date\": true},\n    {\"origin\": \"CPT\", \"destination\": \"CDG\", \"departure_date\": \"2026-10-24\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"Y\",\n    \"allow_nearby_locations\": true,\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 2}, {\"type\": \"CHD\", \"count\": 1}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "06 — South America + Antarctica (12 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"MIA\", \"destination\": \"BOG\", \"departure_date\": \"2026-11-01\"},\n    {\"origin\": \"BOG\", \"destination\": \"UIO\", \"departure_date\": \"2026-11-04\", \"flexible_date\": true},\n    {\"origin\": \"UIO\", \"destination\": \"LIM\", \"departure_date\": \"2026-11-07\"},\n    {\"origin\": \"LIM\", \"destination\": \"CUZ\", \"departure_date\": \"2026-11-10\", \"allow_nearby_locations\": true},\n    {\"origin\": \"CUZ\", \"destination\": \"LPB\", \"departure_date\": \"2026-11-13\"},\n    {\"origin\": \"LPB\", \"destination\": \"SCL\", \"departure_date\": \"2026-11-16\"},\n    {\"origin\": \"SCL\", \"destination\": \"PMC\", \"departure_date\": \"2026-11-19\", \"flexible_date\": true},\n    {\"origin\": \"PMC\", \"destination\": \"PUQ\", \"departure_date\": \"2026-11-22\"},\n    {\"origin\": \"PUQ\", \"destination\": \"USH\", \"departure_date\": \"2026-11-25\"},\n    {\"origin\": \"USH\", \"destination\": \"EZE\", \"departure_date\": \"2026-11-28\"},\n    {\"origin\": \"EZE\", \"destination\": \"GRU\", \"departure_date\": \"2026-12-01\", \"allow_airport_change\": true},\n    {\"origin\": \"GRU\", \"destination\": \"MIA\", \"departure_date\": \"2026-12-04\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"W\",\n    \"flexible_date\": false,\n    \"excluded_airlines\": [\"G3\"],\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 1}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "07 — RTW Oneworld business (14 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"LHR\", \"destination\": \"JFK\", \"departure_date\": \"2026-06-01\"},\n    {\"origin\": \"JFK\", \"destination\": \"LAX\", \"departure_date\": \"2026-06-04\", \"flexible_date\": true},\n    {\"origin\": \"LAX\", \"destination\": \"NRT\", \"departure_date\": \"2026-06-08\"},\n    {\"origin\": \"NRT\", \"destination\": \"HKG\", \"departure_date\": \"2026-06-12\", \"allow_nearby_locations\": true},\n    {\"origin\": \"HKG\", \"destination\": \"BKK\", \"departure_date\": \"2026-06-15\"},\n    {\"origin\": \"BKK\", \"destination\": \"SIN\", \"departure_date\": \"2026-06-18\"},\n    {\"origin\": \"SIN\", \"destination\": \"SYD\", \"departure_date\": \"2026-06-21\", \"flexible_date\": true},\n    {\"origin\": \"SYD\", \"destination\": \"AKL\", \"departure_date\": \"2026-06-25\"},\n    {\"origin\": \"AKL\", \"destination\": \"SYD\", \"departure_date\": \"2026-06-28\"},\n    {\"origin\": \"SYD\", \"destination\": \"DOH\", \"departure_date\": \"2026-07-01\"},\n    {\"origin\": \"DOH\", \"destination\": \"AMM\", \"departure_date\": \"2026-07-05\", \"allow_airport_change\": true},\n    {\"origin\": \"AMM\", \"destination\": \"IST\", \"departure_date\": \"2026-07-08\"},\n    {\"origin\": \"IST\", \"destination\": \"MAD\", \"departure_date\": \"2026-07-11\", \"flexible_date\": true},\n    {\"origin\": \"MAD\", \"destination\": \"LHR\", \"departure_date\": \"2026-07-14\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"C\",\n    \"preferred_airlines\": [\"*O\"],\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 1}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "08 — RTW Star Alliance first class (16 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"FRA\", \"destination\": \"JFK\", \"departure_date\": \"2026-05-01\"},\n    {\"origin\": \"JFK\", \"destination\": \"MIA\", \"departure_date\": \"2026-05-04\", \"cabin_class\": \"Y\"},\n    {\"origin\": \"MIA\", \"destination\": \"GRU\", \"departure_date\": \"2026-05-07\"},\n    {\"origin\": \"GRU\", \"destination\": \"EZE\", \"departure_date\": \"2026-05-10\", \"flexible_date\": true},\n    {\"origin\": \"EZE\", \"destination\": \"SCL\", \"departure_date\": \"2026-05-13\"},\n    {\"origin\": \"SCL\", \"destination\": \"AKL\", \"departure_date\": \"2026-05-16\"},\n    {\"origin\": \"AKL\", \"destination\": \"SYD\", \"departure_date\": \"2026-05-20\", \"allow_nearby_locations\": true},\n    {\"origin\": \"SYD\", \"destination\": \"SIN\", \"departure_date\": \"2026-05-24\"},\n    {\"origin\": \"SIN\", \"destination\": \"BKK\", \"departure_date\": \"2026-05-28\", \"flexible_date\": true},\n    {\"origin\": \"BKK\", \"destination\": \"DEL\", \"departure_date\": \"2026-05-31\"},\n    {\"origin\": \"DEL\", \"destination\": \"IST\", \"departure_date\": \"2026-06-03\", \"allow_airport_change\": true},\n    {\"origin\": \"IST\", \"destination\": \"VIE\", \"departure_date\": \"2026-06-06\"},\n    {\"origin\": \"VIE\", \"destination\": \"ZRH\", \"departure_date\": \"2026-06-09\", \"surface_segment\": true},\n    {\"origin\": \"ZRH\", \"destination\": \"MUC\", \"departure_date\": \"2026-06-09\", \"cabin_class\": \"Y\"},\n    {\"origin\": \"MUC\", \"destination\": \"CPH\", \"departure_date\": \"2026-06-12\", \"flexible_date\": true},\n    {\"origin\": \"CPH\", \"destination\": \"FRA\", \"departure_date\": \"2026-06-15\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"F\",\n    \"preferred_airlines\": [\"*A\"],\n    \"allow_nearby_locations\": true,\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 1}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "09 — Family trip mixed cabin (20 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"LHR\", \"destination\": \"DXB\", \"departure_date\": \"2026-07-01\", \"cabin_class\": \"C\"},\n    {\"origin\": \"DXB\", \"destination\": \"BOM\", \"departure_date\": \"2026-07-04\"},\n    {\"origin\": \"BOM\", \"destination\": \"DEL\", \"departure_date\": \"2026-07-07\", \"surface_segment\": true},\n    {\"origin\": \"DEL\", \"destination\": \"KTM\", \"departure_date\": \"2026-07-07\", \"flexible_date\": true},\n    {\"origin\": \"KTM\", \"destination\": \"BKK\", \"departure_date\": \"2026-07-11\"},\n    {\"origin\": \"BKK\", \"destination\": \"REP\", \"departure_date\": \"2026-07-14\", \"allow_nearby_locations\": true},\n    {\"origin\": \"REP\", \"destination\": \"SGN\", \"departure_date\": \"2026-07-17\"},\n    {\"origin\": \"SGN\", \"destination\": \"HAN\", \"departure_date\": \"2026-07-20\"},\n    {\"origin\": \"HAN\", \"destination\": \"HKG\", \"departure_date\": \"2026-07-23\", \"flexible_date\": true},\n    {\"origin\": \"HKG\", \"destination\": \"TPE\", \"departure_date\": \"2026-07-26\"},\n    {\"origin\": \"TPE\", \"destination\": \"NRT\", \"departure_date\": \"2026-07-29\", \"allow_airport_change\": true},\n    {\"origin\": \"NRT\", \"destination\": \"KIX\", \"departure_date\": \"2026-08-01\"},\n    {\"origin\": \"KIX\", \"destination\": \"ICN\", \"departure_date\": \"2026-08-04\", \"flexible_date\": true},\n    {\"origin\": \"ICN\", \"destination\": \"PVG\", \"departure_date\": \"2026-08-07\"},\n    {\"origin\": \"PVG\", \"destination\": \"PEK\", \"departure_date\": \"2026-08-10\", \"surface_segment\": true},\n    {\"origin\": \"PEK\", \"destination\": \"ULN\", \"departure_date\": \"2026-08-10\"},\n    {\"origin\": \"ULN\", \"destination\": \"PEK\", \"departure_date\": \"2026-08-13\"},\n    {\"origin\": \"PEK\", \"destination\": \"SIN\", \"departure_date\": \"2026-08-16\", \"allow_nearby_locations\": true},\n    {\"origin\": \"SIN\", \"destination\": \"DXB\", \"departure_date\": \"2026-08-19\"},\n    {\"origin\": \"DXB\", \"destination\": \"LHR\", \"departure_date\": \"2026-08-22\", \"cabin_class\": \"C\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"Y\",\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 2}, {\"type\": \"CHD\", \"count\": 2}, {\"type\": \"INF\", \"count\": 1}]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "10 — Ultimate RTW every continent (24 legs)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{base_url}}/split", "host": ["{{base_url}}"], "path": ["split"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"legs\": [\n    {\"origin\": \"LHR\", \"destination\": \"JFK\", \"departure_date\": \"2026-04-01\", \"cabin_class\": \"C\"},\n    {\"origin\": \"JFK\", \"destination\": \"MIA\", \"departure_date\": \"2026-04-04\", \"flexible_date\": true},\n    {\"origin\": \"MIA\", \"destination\": \"BOG\", \"departure_date\": \"2026-04-07\"},\n    {\"origin\": \"BOG\", \"destination\": \"LIM\", \"departure_date\": \"2026-04-10\"},\n    {\"origin\": \"LIM\", \"destination\": \"SCL\", \"departure_date\": \"2026-04-13\", \"allow_nearby_locations\": true},\n    {\"origin\": \"SCL\", \"destination\": \"EZE\", \"departure_date\": \"2026-04-16\"},\n    {\"origin\": \"EZE\", \"destination\": \"GRU\", \"departure_date\": \"2026-04-19\", \"surface_segment\": true},\n    {\"origin\": \"GRU\", \"destination\": \"JNB\", \"departure_date\": \"2026-04-19\"},\n    {\"origin\": \"JNB\", \"destination\": \"CPT\", \"departure_date\": \"2026-04-23\", \"flexible_date\": true},\n    {\"origin\": \"CPT\", \"destination\": \"NBO\", \"departure_date\": \"2026-04-26\"},\n    {\"origin\": \"NBO\", \"destination\": \"ADD\", \"departure_date\": \"2026-04-29\"},\n    {\"origin\": \"ADD\", \"destination\": \"DXB\", \"departure_date\": \"2026-05-02\", \"allow_airport_change\": true},\n    {\"origin\": \"DXB\", \"destination\": \"DEL\", \"departure_date\": \"2026-05-05\"},\n    {\"origin\": \"DEL\", \"destination\": \"BKK\", \"departure_date\": \"2026-05-08\", \"flexible_date\": true},\n    {\"origin\": \"BKK\", \"destination\": \"SIN\", \"departure_date\": \"2026-05-11\"},\n    {\"origin\": \"SIN\", \"destination\": \"SYD\", \"departure_date\": \"2026-05-14\", \"allow_nearby_locations\": true},\n    {\"origin\": \"SYD\", \"destination\": \"AKL\", \"departure_date\": \"2026-05-18\"},\n    {\"origin\": \"AKL\", \"destination\": \"SYD\", \"departure_date\": \"2026-05-21\"},\n    {\"origin\": \"SYD\", \"destination\": \"NRT\", \"departure_date\": \"2026-05-24\", \"cabin_class\": \"C\"},\n    {\"origin\": \"NRT\", \"destination\": \"ICN\", \"departure_date\": \"2026-05-27\", \"flexible_date\": true},\n    {\"origin\": \"ICN\", \"destination\": \"PEK\", \"departure_date\": \"2026-05-30\"},\n    {\"origin\": \"PEK\", \"destination\": \"IST\", \"departure_date\": \"2026-06-02\"},\n    {\"origin\": \"IST\", \"destination\": \"ATH\", \"departure_date\": \"2026-06-05\", \"allow_airport_change\": true},\n    {\"origin\": \"ATH\", \"destination\": \"LHR\", \"departure_date\": \"2026-06-08\", \"cabin_class\": \"C\"}\n  ],\n  \"settings\": {\n    \"cabin_class\": \"Y\",\n    \"flexible_date\": false,\n    \"allow_nearby_locations\": false,\n    \"preferred_airlines\": [\"*A\"],\n    \"passengers\": [{\"type\": \"ADT\", \"count\": 2}]\n  }\n}"
+        }
+      }
+    }
+  ]
+}
