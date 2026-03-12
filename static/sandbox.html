@@ -26,134 +26,127 @@
   html { font-size: 14px; }
   body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.5; min-height: 100vh; }
   a { color: var(--accent); text-decoration: none; cursor: pointer; }
-  a:hover { color: var(--accent-hover); }
+  a:hover:not(.disabled) { color: var(--accent-hover); }
+  a.disabled { color: var(--text-dim); opacity: .35; cursor: default; pointer-events: none; }
 
-  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .page { max-width: 1280px; margin: 0 auto; padding: 1.5rem; }
   h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: .25rem; }
-  .subtitle { color: var(--text-dim); margin-bottom: 2rem; font-size: .9rem; }
+  .subtitle { color: var(--text-dim); margin-bottom: 1.5rem; font-size: .9rem; }
 
-  /* Panels */
-  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.25rem; }
-  .panel-title { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--text-dim); margin-bottom: .75rem; display: flex; align-items: center; justify-content: space-between; }
+  .columns { display: grid; grid-template-columns: 340px 1fr; gap: 1.25rem; align-items: start; }
 
-  /* Route list */
-  .route-filter { width: 100%; padding: .5rem .75rem; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: var(--font); font-size: .85rem; margin-bottom: .75rem; outline: none; }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+  .panel + .panel { margin-top: 1.25rem; }
+  .panel-title { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--text-dim); margin-bottom: .75rem; display: flex; align-items: center; justify-content: space-between; }
+
+  /* Left column — routes */
+  .col-left .panel { display: flex; flex-direction: column; max-height: calc(100vh - 8rem); }
+  .route-filter { width: 100%; padding: .5rem .75rem; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: var(--font); font-size: .85rem; margin-bottom: .6rem; outline: none; flex-shrink: 0; }
   .route-filter:focus { border-color: var(--accent); }
-  .route-list { max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+  .route-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; min-height: 0; }
   .route-list::-webkit-scrollbar { width: 6px; }
   .route-list::-webkit-scrollbar-track { background: transparent; }
   .route-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  .route-item { padding: .45rem .7rem; border-radius: 4px; cursor: pointer; font-family: var(--mono); font-size: .8rem; display: flex; justify-content: space-between; align-items: center; transition: background .1s; user-select: none; }
+  .route-item { padding: .4rem .65rem; border-radius: 4px; cursor: pointer; font-family: var(--mono); font-size: .78rem; display: flex; justify-content: space-between; align-items: center; transition: background .1s; user-select: none; flex-shrink: 0; }
   .route-item:hover { background: var(--surface2); }
   .route-item.selected { background: var(--accent-dim); color: var(--accent-hover); }
-  .route-item .legs-badge { font-family: var(--font); font-size: .7rem; color: var(--text-dim); background: var(--surface2); padding: .1rem .45rem; border-radius: 10px; white-space: nowrap; }
+  .route-item .legs-badge { font-family: var(--font); font-size: .68rem; color: var(--text-dim); background: var(--surface2); padding: .1rem .4rem; border-radius: 10px; white-space: nowrap; }
   .route-item.selected .legs-badge { background: rgba(108,126,225,.2); color: var(--accent); }
-
-  /* Custom route */
-  .custom-row { display: flex; gap: .5rem; margin-top: .75rem; }
-  .custom-input { flex: 1; padding: .5rem .75rem; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: var(--mono); font-size: .85rem; outline: none; }
+  .custom-row { display: flex; gap: .5rem; margin-top: .6rem; flex-shrink: 0; }
+  .custom-input { flex: 1; padding: .45rem .65rem; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: var(--mono); font-size: .8rem; outline: none; min-width: 0; }
   .custom-input:focus { border-color: var(--accent); }
   .custom-input::placeholder { color: var(--text-dim); }
-  .btn-use { padding: .5rem 1rem; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); cursor: pointer; font-size: .8rem; white-space: nowrap; }
+  .btn-use { padding: .45rem .75rem; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); cursor: pointer; font-size: .78rem; white-space: nowrap; }
   .btn-use:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Strategies */
-  .strategies-row { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+  /* Right column */
+  .strategies-row { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
   .strat-label { display: flex; align-items: center; gap: .4rem; cursor: pointer; padding: .4rem .7rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface2); transition: all .15s; user-select: none; font-size: .85rem; }
   .strat-label:hover { border-color: var(--accent); }
   .strat-label input { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; }
   .strat-label.checked { border-color: var(--accent); background: var(--accent-dim); }
   .strat-links { font-size: .8rem; margin-left: auto; display: flex; gap: .75rem; }
 
-  /* Submit */
-  .submit-row { display: flex; align-items: center; gap: 1rem; }
-  .btn-submit { padding: .6rem 2rem; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); font-size: .9rem; font-weight: 600; cursor: pointer; transition: background .15s, opacity .15s; }
+  .submit-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .btn-submit { padding: .55rem 1.75rem; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); font-size: .9rem; font-weight: 600; cursor: pointer; transition: background .15s, opacity .15s; }
   .btn-submit:hover:not(:disabled) { background: var(--accent-hover); }
   .btn-submit:disabled { opacity: .35; cursor: not-allowed; }
   .selected-route-display { font-family: var(--mono); font-size: .85rem; color: var(--accent); }
   .submit-error { color: var(--red); font-size: .8rem; }
 
-  /* Loading */
   .loading { display: flex; align-items: center; gap: .6rem; color: var(--text-dim); font-size: .85rem; padding: 1.5rem 0; }
   .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .6s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Results */
   .results-container { display: flex; flex-direction: column; gap: 1rem; }
   .result-option { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .result-header { padding: .75rem 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+  .result-header { padding: .65rem .9rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
   .strategy-name { font-weight: 600; font-size: .9rem; text-transform: capitalize; }
   .strategy-desc { font-size: .8rem; color: var(--text-dim); }
-  .search-groups { padding: .75rem 1rem; display: flex; flex-direction: column; gap: .5rem; }
+  .search-groups { padding: .65rem .9rem; display: flex; flex-direction: column; gap: .4rem; }
   .search-group { display: flex; align-items: baseline; gap: .6rem; font-size: .85rem; }
   .group-idx { color: var(--text-dim); font-size: .75rem; min-width: 1.6rem; }
   .group-route { font-family: var(--mono); color: var(--green); font-weight: 500; }
   .group-dates { font-size: .75rem; color: var(--text-dim); }
   .group-note { font-size: .75rem; color: var(--orange); font-style: italic; }
-
   .error-box { background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.25); border-radius: var(--radius); padding: 1rem; color: var(--red); font-size: .85rem; }
-
   .meta-line { font-size: .8rem; color: var(--text-dim); margin-bottom: .75rem; }
   .meta-line span { color: var(--text); font-weight: 500; }
 
-  @media (max-width: 700px) {
-    .strategies-row { gap: .4rem; }
-    .strat-links { margin-left: 0; width: 100%; }
+  @media (max-width: 780px) {
+    .columns { grid-template-columns: 1fr; }
+    .col-left .panel { max-height: 50vh; }
   }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="page">
   <h1>Itinerary Optimizer Sandbox</h1>
   <p class="subtitle">Select a route, pick strategies, and see how the AI splits it for Amadeus searches.</p>
 
-  <!-- Route Selection -->
-  <div class="panel">
-    <div class="panel-title">Select a Route</div>
-    <input type="text" class="route-filter" id="routeFilter" placeholder="Filter routes…">
-    <div class="route-list" id="routeList"></div>
-    <div class="custom-row">
-      <input type="text" class="custom-input" id="customRoute" placeholder="Custom route, e.g. JFK-LHR-CDG-FCO-JFK">
-      <button class="btn-use" id="btnUseCustom">Use Custom</button>
+  <div class="columns">
+    <!-- Left: route list -->
+    <div class="col-left">
+      <div class="panel">
+        <div class="panel-title">Routes</div>
+        <input type="text" class="route-filter" id="routeFilter" placeholder="Filter routes…">
+        <div class="route-list" id="routeList"></div>
+        <div class="custom-row">
+          <input type="text" class="custom-input" id="customRoute" placeholder="e.g. JFK-LHR-CDG-JFK">
+          <button class="btn-use" id="btnUseCustom">Use</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: strategies, submit, results -->
+    <div class="col-right">
+      <div class="panel">
+        <div class="panel-title">
+          Strategies
+          <span class="strat-links">
+            <a id="selectAll">select all</a>
+            <a id="selectNone" class="disabled">select none</a>
+          </span>
+        </div>
+        <div class="strategies-row" id="strategiesRow">
+          <label class="strat-label"><input type="checkbox" value="comfort"> Comfort</label>
+          <label class="strat-label"><input type="checkbox" value="best_value"> Best Value</label>
+          <label class="strat-label"><input type="checkbox" value="cheapest"> Cheapest</label>
+          <label class="strat-label"><input type="checkbox" value="shortest"> Shortest</label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="submit-row">
+          <button class="btn-submit" id="btnSubmit" disabled>Submit</button>
+          <span class="selected-route-display" id="selectedDisplay">No route selected</span>
+          <span class="submit-error" id="submitError"></span>
+        </div>
+      </div>
+
+      <div id="resultsArea"></div>
     </div>
   </div>
-
-  <!-- Strategy Selection -->
-  <div class="panel">
-    <div class="panel-title">
-      Strategies
-      <span class="strat-links">
-        <a id="selectAll">select all</a>
-        <a id="selectNone">select none</a>
-      </span>
-    </div>
-    <div class="strategies-row" id="strategiesRow">
-      <label class="strat-label" data-strategy="comfort">
-        <input type="checkbox" value="comfort"> Comfort
-      </label>
-      <label class="strat-label" data-strategy="best_value">
-        <input type="checkbox" value="best_value"> Best Value
-      </label>
-      <label class="strat-label" data-strategy="cheapest">
-        <input type="checkbox" value="cheapest"> Cheapest
-      </label>
-      <label class="strat-label" data-strategy="shortest">
-        <input type="checkbox" value="shortest"> Shortest
-      </label>
-    </div>
-  </div>
-
-  <!-- Submit -->
-  <div class="panel">
-    <div class="submit-row">
-      <button class="btn-submit" id="btnSubmit" disabled>Submit</button>
-      <span class="selected-route-display" id="selectedDisplay">No route selected</span>
-      <span class="submit-error" id="submitError"></span>
-    </div>
-  </div>
-
-  <!-- Results -->
-  <div id="resultsArea"></div>
 </div>
 
 <script>
@@ -248,14 +241,16 @@ function formatDate(d) {
   return `${parseInt(parts[2])} ${m[parseInt(parts[1]) - 1]}`;
 }
 
-/* Render route list */
 const routeListEl = document.getElementById("routeList");
 const filterEl = document.getElementById("routeFilter");
+const checkboxes = document.querySelectorAll('.strat-label input[type="checkbox"]');
+const linkAll = document.getElementById("selectAll");
+const linkNone = document.getElementById("selectNone");
 
 function renderRoutes(filter) {
   const f = (filter || "").toUpperCase();
   routeListEl.innerHTML = "";
-  ROUTES.forEach((codes, idx) => {
+  ROUTES.forEach((codes) => {
     const label = routeLabel(codes);
     if (f && !label.includes(f)) return;
     const el = document.createElement("div");
@@ -276,13 +271,12 @@ function selectRoute(codes) {
   updateSubmitState();
 }
 
-/* Custom route */
 document.getElementById("btnUseCustom").addEventListener("click", () => {
   const val = document.getElementById("customRoute").value.trim().toUpperCase();
   if (!val) return;
   const codes = val.split(/[-\s,>]+/).filter(c => c.length === 3);
   if (codes.length < 4) {
-    document.getElementById("submitError").textContent = "Custom route needs at least 4 airports (3 legs).";
+    document.getElementById("submitError").textContent = "Need at least 4 airports (3 legs).";
     return;
   }
   document.getElementById("submitError").textContent = "";
@@ -291,27 +285,27 @@ document.getElementById("btnUseCustom").addEventListener("click", () => {
   updateSubmitState();
 });
 
-/* Strategies */
-const checkboxes = document.querySelectorAll('.strat-label input[type="checkbox"]');
-
-function syncStratLabels() {
+function syncStratState() {
+  const checked = [...checkboxes].filter(cb => cb.checked).length;
+  const total = checkboxes.length;
   document.querySelectorAll(".strat-label").forEach(lbl => {
     lbl.classList.toggle("checked", lbl.querySelector("input").checked);
   });
+  linkAll.classList.toggle("disabled", checked === total);
+  linkNone.classList.toggle("disabled", checked === 0);
   updateSubmitState();
 }
-checkboxes.forEach(cb => cb.addEventListener("change", syncStratLabels));
+checkboxes.forEach(cb => cb.addEventListener("change", syncStratState));
 
-document.getElementById("selectAll").addEventListener("click", () => {
+linkAll.addEventListener("click", () => {
   checkboxes.forEach(cb => cb.checked = true);
-  syncStratLabels();
+  syncStratState();
 });
-document.getElementById("selectNone").addEventListener("click", () => {
+linkNone.addEventListener("click", () => {
   checkboxes.forEach(cb => cb.checked = false);
-  syncStratLabels();
+  syncStratState();
 });
 
-/* Submit state */
 function getSelectedStrategies() {
   return [...checkboxes].filter(cb => cb.checked).map(cb => cb.value);
 }
@@ -320,16 +314,12 @@ function updateSubmitState() {
   const btn = document.getElementById("btnSubmit");
   const display = document.getElementById("selectedDisplay");
   const strats = getSelectedStrategies();
-  const ready = selectedCodes && strats.length > 0;
-  btn.disabled = !ready;
-  if (selectedCodes) {
-    display.textContent = routeLabel(selectedCodes) + ` (${legCount(selectedCodes)} legs)`;
-  } else {
-    display.textContent = "No route selected";
-  }
+  btn.disabled = !(selectedCodes && strats.length > 0);
+  display.textContent = selectedCodes
+    ? routeLabel(selectedCodes) + ` (${legCount(selectedCodes)} legs)`
+    : "No route selected";
 }
 
-/* Submit */
 document.getElementById("btnSubmit").addEventListener("click", async () => {
   const strats = getSelectedStrategies();
   if (!selectedCodes || !strats.length) return;
@@ -339,7 +329,6 @@ document.getElementById("btnSubmit").addEventListener("click", async () => {
 
   const area = document.getElementById("resultsArea");
   area.innerHTML = `<div class="panel"><div class="loading"><div class="spinner"></div>Splitting ${legCount(selectedCodes)}-leg itinerary across ${strats.length} strateg${strats.length === 1 ? "y" : "ies"}…</div></div>`;
-
   document.getElementById("btnSubmit").disabled = true;
 
   try {
@@ -352,8 +341,7 @@ document.getElementById("btnSubmit").addEventListener("click", async () => {
       const err = await resp.json().catch(() => ({ detail: resp.statusText }));
       throw new Error(err.detail || resp.statusText);
     }
-    const data = await resp.json();
-    renderResults(data);
+    renderResults(await resp.json());
   } catch (e) {
     area.innerHTML = `<div class="error-box">Request failed: ${e.message}</div>`;
   } finally {
@@ -365,29 +353,21 @@ function renderResults(data) {
   const area = document.getElementById("resultsArea");
   let html = `<div class="panel"><div class="meta-line">Total legs: <span>${data.total_legs}</span> · Strategies returned: <span>${data.options.length}</span></div>`;
   html += `<div class="results-container">`;
-
   for (const opt of data.options) {
-    const stratLabel = opt.strategy.replace("_", " ");
     html += `<div class="result-option">`;
-    html += `<div class="result-header"><span class="strategy-name">${stratLabel}</span><span class="strategy-desc">${opt.description || ""}</span></div>`;
+    html += `<div class="result-header"><span class="strategy-name">${opt.strategy.replace("_", " ")}</span><span class="strategy-desc">${opt.description || ""}</span></div>`;
     html += `<div class="search-groups">`;
-
     opt.searches.forEach((sg, i) => {
       const compact = legsToCompact(sg.legs);
       const dateRange = sg.legs.length
         ? formatDate(sg.legs[0].date) + (sg.legs.length > 1 ? " → " + formatDate(sg.legs[sg.legs.length - 1].date) : "")
         : "";
-      html += `<div class="search-group">`;
-      html += `<span class="group-idx">${i + 1}.</span>`;
-      html += `<span class="group-route">${compact}</span>`;
-      html += `<span class="group-dates">${dateRange}</span>`;
+      html += `<div class="search-group"><span class="group-idx">${i + 1}.</span><span class="group-route">${compact}</span><span class="group-dates">${dateRange}</span>`;
       if (sg.note) html += `<span class="group-note">${sg.note}</span>`;
       html += `</div>`;
     });
-
     html += `</div></div>`;
   }
-
   html += `</div></div>`;
   area.innerHTML = html;
 }
